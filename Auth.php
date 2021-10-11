@@ -5,7 +5,7 @@ include('inc/header.php');
 ?>
 <?php include('inc/container.php');?>
 <div class="container">
-	<h2>Simplest REST API with PHP and MySQL</h2>	
+	<h2>Simplest Authorization in wrike with PHP</h2>	
 	<br>
 	<br>
 	<h3>1. Initailization</h3>	
