@@ -89,9 +89,32 @@ $wrike = new wrike();
    			alert("Not Found Contacts");
    			</script>
    			<?php 
-   		}
+   			}
+   			if ($Isfindcontacts[0]=='Access token is unknown or invalid') {
+   				$wrike->generaterefreshAccessToken();
+   				if ($Isfindcontacts==-1) {
+   					?>
+   						<script type="text/javascript">
+   						alert("Not Found Token");
+   						</script>
+   					<?php 
+   				}
+   				else
+   				{
+   					?>
+   						<script type="text/javascript">
+   						alert("Token is Refreshed");
+   						</script>
+   					<?php 
+   				}	
+   			}
+   			else
+   			{
+   				print_r($Isfindcontacts);
+
+
+   			}	
  	
-//   		$wrike->generaterefreshAccessToken("luaXb1gH","3K9WM4aANzzYNuYMNkPJulMXrFieCIoZRrbbaY7W2N6NOr6xyhC0tLKXYhh5j7S9");			
 }
 ?>
 
