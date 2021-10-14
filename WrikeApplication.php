@@ -7,7 +7,7 @@ $wrike = new wrike();
 ?>
 <?php include('inc/container.php');?>
 <div class="container">
-	<h2>Simple REST API with PHP and MySQL</h2>	
+	<h2>Simple REST API with PHP and MySQL and wrike</h2>	
 	<br>
 	<br>
 	<form action="" method="POST">
