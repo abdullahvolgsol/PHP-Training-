@@ -3,7 +3,6 @@ header("Access-Control-Allow-Origin: *");
 include('inc/header.php');
 include('src/wrike.php');
 $wrike = new wrike();            
-
 ?>
 <?php include('inc/container.php');?>
 <div class="container">
@@ -26,8 +25,9 @@ $wrike = new wrike();
    if(isset($_POST['userdetail']))  {
       $client_id = $_POST['client_id'];
       $client_secret = $_POST['client_secret'];
-         $getInitaillize=$wrike->Initailization($client_id,$client_secret);
-
+         $getInitaillize=$wrike->InitailizationWrikeApplication($client_id,$client_secret);
+      if ($getInitaillize==-1||$getInitaillize==-2)
+      {  
          if ($getInitaillize==-1) {
             ?>
             <script type="text/javascript">
@@ -35,14 +35,19 @@ $wrike = new wrike();
             </script>
             <?php 
          }
-
-      
-}
+         if ($getInitaillize==-2) {
+            ?>
+            <script type="text/javascript">
+            alert("Incorrect Url");
+            </script>
+            <?php 
+         }
+      }
+   }
    ?> 
       <form action="" method="POST">
       <div class="form-group">
          <h3>Authorize code</h3>
-      
          <br>        
          <input type="text" name="code" value="Enter Code" class="form-control" required/>
       </div>
@@ -51,37 +56,53 @@ $wrike = new wrike();
    <p>&nbsp;</p>
    <?php
    if(isset($_POST['codesubmit']))  {
-      $code = $_POST['code'];
-      $getAccessToken=$wrike->generateAccessToken($code);
-         if ($getAccessToken==-1) {
-            ?>
-            <script type="text/javascript">
-            alert("Not Found AccessToken");
-            </script>
-            <?php 
-         }
-      else
-      {
-         ?>
-            <script type="text/javascript">
-            alert("Finally Found AccessToken");
-            </script>
-            <?php 
-
-      }
+         $code = $_POST['code'];
+         $getAccessToken=$wrike->GenerateAccessToken($code);
+           if ($getAccessToken==-1||$getAccessToken==-2||$getAccessToken==-3)
+               {  
+                  if ($getAccessToken==-1) {
+                  ?>
+                  <script type="text/javascript">
+                  alert("No Connection Found");
+                  </script>
+                  <?php 
+                  }
+                  if ($getAccessToken==-2) {
+                  ?>
+                  <script type="text/javascript">
+                  alert("No Record Found");
+                  </script>
+                  <?php 
+                  }
+                  if ($getAccessToken==-3) {
+                  ?>
+                  <script type="text/javascript">
+                  alert("No Record Added");
+                  </script>
+                  <?php 
+                  }
+               }
+            else
+               {
+                  ?>
+                  <script type="text/javascript">
+                  alert(" AccessToken Found Successfully");
+                  </script>
+                  <?php 
+               }
          
-}
+   }
 ?>
       <form action="" method="POST">
       <div class="form-group">
          <h3>Test Connection</h3>
          <br>
          <button type="submit" name="testconnection" class="btn btn-default">Test Connectiion</button>
-   </form>
-   <p>&nbsp;</p>
+      </form>
+      <p>&nbsp;</p>
    <?php
    if(isset($_POST['testconnection'])) {
-      $IsFindContacts=$wrike->Usingaccesstokenfindcontacts();
+      $IsFindContacts=$wrike->UsingAccessTokenFindContacts();
          if ($IsFindContacts==-1) {
             ?>
             <script type="text/javascript">
@@ -89,34 +110,53 @@ $wrike = new wrike();
             </script>
             <?php 
             }
-            if ($IsFindContacts[0]=='Access token is unknown or invalid') {
-               $wrike->generaterefreshAccessToken();
-               if ($IsFindContacts==-1) {
+         if ($IsFindContacts[0]=='Access token is unknown or invalid') {
+            $isRefreshToken=$wrike->GenerateRefreshAccessToken();
+            if ($isRefreshToken==-1||$isRefreshToken==-2||$isRefreshToken==-3)
+               {  
+                  if ($isRefreshToken==-1) {
                   ?>
-                     <script type="text/javascript">
-                     alert("Not Found Token");
-                     </script>
+                  <script type="text/javascript">
+                  alert("No Connection Found");
+                  </script>
                   <?php 
+                  }
+                  if ($isRefreshToken==-2) {
+                  ?>
+                  <script type="text/javascript">
+                  alert("No Record Found");
+                  </script>
+                  <?php 
+                  }
+                  if ($isRefreshToken==-3) {
+                  ?>
+                  <script type="text/javascript">
+                  alert("No Record Added");
+                  </script>
+                  <?php 
+                  }
                }
-               else
+            else
                {
                   ?>
-                     <script type="text/javascript">
-                     alert("Token is Refreshed");
-                     </script>
+                  <script type="text/javascript">
+                  alert("Token Refresh Successfully");
+                  </script>
                   <?php 
-               }  
+               }
             }
             else
             {
-               print_r($IsFindContacts);
-
-
+                  ?>
+                  <script type="text/javascript">
+                  alert("Contacts Found Successfully");
+                  </script>
+                  <?php 
+           
             }  
    
-}
+   }
 ?>
-
 </div>
 <?php include('inc/footer.php');?>
 
