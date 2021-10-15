@@ -25,17 +25,17 @@ $wrike = new wrike();
    if(isset($_POST['userdetail']))  {
       $client_id = $_POST['client_id'];
       $client_secret = $_POST['client_secret'];
-         $getInitaillize=$wrike->InitailizationWrikeApplication($client_id,$client_secret);
-      if ($getInitaillize==-1||$getInitaillize==-2)
+         $InitailizeWrikeFunction=$wrike->InitailizationWrikeApplication($client_id,$client_secret);
+      if ($InitailizeWrikeFunction==-1||$InitailizeWrikeFunction==-2)
       {  
-         if ($getInitaillize==-1) {
+         if ($InitailizeWrikeFunction==-1) {
             ?>
             <script type="text/javascript">
             alert("Incorrect client_id");
             </script>
             <?php 
          }
-         if ($getInitaillize==-2) {
+         if ($InitailizeWrikeFunction==-2) {
             ?>
             <script type="text/javascript">
             alert("Incorrect Url");
@@ -57,24 +57,24 @@ $wrike = new wrike();
    <?php
    if(isset($_POST['codesubmit']))  {
          $code = $_POST['code'];
-         $getAccessToken=$wrike->GenerateAccessToken($code);
-           if ($getAccessToken==-1||$getAccessToken==-2||$getAccessToken==-3)
+         $isAccessToken=$wrike->GenerateAccessToken($code);
+           if ($isAccessToken==-1||$isAccessToken==-2||$isAccessToken==-3)
                {  
-                  if ($getAccessToken==-1) {
+                  if ($isAccessToken==-1) {
                   ?>
                   <script type="text/javascript">
                   alert("No Connection Found");
                   </script>
                   <?php 
                   }
-                  if ($getAccessToken==-2) {
+                  if ($isAccessToken==-2) {
                   ?>
                   <script type="text/javascript">
                   alert("No Record Found");
                   </script>
                   <?php 
                   }
-                  if ($getAccessToken==-3) {
+                  if ($isAccessToken==-3) {
                   ?>
                   <script type="text/javascript">
                   alert("No Record Added");
